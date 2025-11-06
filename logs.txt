@@ -1,0 +1,14 @@
+🚀 Running daily AI cost monitor...
+✅ Loaded cost data:
+          ds      y
+0 2025-09-06  31.61
+1 2025-09-07  34.35
+2 2025-09-08  39.64
+3 2025-09-09  39.46
+4 2025-09-10  35.06
+Traceback (most recent call last):
+  File "/home/vicky/ai-cost-optimizer/daily_monitor.py", line 49, in <module>
+    run_daily_monitor()
+  File "/home/vicky/ai-cost-optimizer/daily_monitor.py", line 33, in run_daily_monitor
+    if not anomalies.empty:
+AttributeError: 'tuple' object has no attribute 'empty'
