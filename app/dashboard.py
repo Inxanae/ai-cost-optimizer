@@ -1,55 +1,150 @@
-import streamlit as st
-import pandas as pd
-import boto3
-from datetime import datetime
+import os
+import plotly.express as px
 from prophet import Prophet
+from email_alert import send_email_alert
+from anomaly_detector import detect_anomalies
+import streamlit as st
+import matplotlib.pyplot as plt
+from cost_predictor import load_data, predict_cost
+from optimizer import suggest_optimizations
+import pandas as pd
 
-st.set_page_config(page_title="AI Cost Optimizer", layout="wide")
+# ---------------------------------
+# Sidebar: Email Alert Tester
+# ---------------------------------
+st.sidebar.header("📧 Email Alert Tester")
 
+recipient_email = st.sidebar.text_input("Recipient Email", "your_email@gmail.com")
+sender_email = st.sidebar.text_input("Sender Gmail", "your_gmail@gmail.com")
+sender_password = st.sidebar.text_input("Gmail App Password", type="password")
+
+if st.sidebar.button("Send Test Email"):
+    try:
+        send_email_alert(
+            subject="✅ AI Cost Optimizer Test Email",
+            body="This is a test email from your AI Cost Optimizer project.",
+            recipient_email=recipient_email,
+            sender_email=sender_email,
+            sender_password=sender_password
+        )
+        st.sidebar.success("✅ Test email sent successfully!")
+    except Exception as e:
+        st.sidebar.error(f"❌ Failed to send email: {e}")
+
+# ---------------------------------
 # Title
-st.title("Predictive AWS Cost Optimization Dashboard")
+# ---------------------------------
+st.title("💡 AI-Powered Cloud Cost Predictor & Optimizer")
 
-# --- CACHE AWS COST DATA ---
-@st.cache_data(ttl=86400)  # Cache for 24 hours
-def get_aws_cost_data():
-    client = boto3.client('ce', region_name='us-east-1')
-    response = client.get_cost_and_usage(
-        TimePeriod={
-            'Start': '2024-10-01',
-            'End': datetime.now().strftime('%Y-%m-%d')
-        },
-        Granularity='DAILY',
-        Metrics=['UnblendedCost']
-    )
-    
-    # Parse AWS data
-    df = pd.DataFrame([
-        {
-            "Date": item['TimePeriod']['Start'],
-            "Cost": float(item['Metrics']['UnblendedCost']['Amount'])
-        }
-        for item in response['ResultsByTime']
-    ])
-    return df
+# ---------------------------------
+# Load data
+# ---------------------------------
+try:
+    raw_df = pd.read_csv("data/aws_billing_mock.csv")
+    df = load_data("data/aws_billing_mock.csv")
+except Exception:
+    # Fallback mock data
+    st.warning("⚠️ Using sample mock data (no CSV found).")
+    df = pd.DataFrame({
+        "ds": pd.date_range("2025-10-01", periods=10, freq="D"),
+        "y": [120.5, 135.7, 122.9, 140.3, 129.0, 145.4, 138.2, 142.8, 130.7, 136.5]
+    })
+    raw_df = df.copy()
 
-# --- FETCH DATA ---
-data = get_aws_cost_data()
+# ---------------------------------
+# Predict & Optimize
+# ---------------------------------
+forecast = predict_cost(df)
+suggestions = suggest_optimizations(raw_df)
 
-# --- DISPLAY CURRENT COSTS ---
-st.subheader("AWS Daily Cost Trend")
-st.line_chart(data.set_index("Date")["Cost"])
+# ---------------------------------
+# Display Historical Data
+# ---------------------------------
+st.subheader("📊 Historical Cost Data")
+st.line_chart(df.set_index('ds')['y'])
 
-# --- FORECAST FUTURE COSTS (AI PART) ---
-st.subheader("Predicted AWS Monthly Cost")
-df = data.rename(columns={"Date": "ds", "Cost": "y"})
+# ---------------------------------
+# Predicted Future Cost
+# ---------------------------------
+st.subheader("🔮 Predicted Future Cost (Next 30 Days)")
+fig, ax = plt.subplots()
+ax.plot(forecast['ds'], forecast['yhat'], label='Predicted')
+ax.set_xlabel("Date")
+ax.set_ylabel("Predicted Cost (₹)")
+st.pyplot(fig)
 
-model = Prophet()
-model.fit(df)
-future = model.make_future_dataframe(periods=30)
-forecast = model.predict(future)
+# ---------------------------------
+# AI Optimization Suggestions
+# ---------------------------------
+st.subheader("🧠 AI Optimization Suggestions")
+for s in suggestions:
+    st.write("-", s)
 
-st.line_chart(forecast.set_index("ds")[["yhat", "yhat_lower", "yhat_upper"]])
+# ---------------------------------
+# Detect anomalies
+# ---------------------------------
+st.subheader("🚨 Anomaly Detection (Cost Spikes)")
+anomalies, alerts = detect_anomalies(df)
 
-# --- INFO ---
-st.caption(f"Data last updated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-st.success("✅ Data auto-refreshes every 24 hours.")
+if len(alerts) > 0:
+    for alert in alerts:
+        st.error(alert)
+else:
+    st.success("✅ No anomalies detected. Spending is stable.")
+
+# Plot anomalies
+fig, ax = plt.subplots()
+ax.plot(df['ds'], df['y'], label='Cost')
+if not anomalies.empty:
+    ax.scatter(anomalies['ds'], anomalies['y'], color='red', label='Anomalies', marker='o')
+ax.set_xlabel("Date")
+ax.set_ylabel("Cost (₹)")
+ax.legend()
+st.pyplot(fig)
+
+# ---------------------------------
+# Send Email if Anomalies Found
+# ---------------------------------
+if len(alerts) > 0:
+    subject = "⚠️ AI Cost Optimizer Alert: Cost Spike Detected"
+    body = "\n".join(alerts)
+    recipient_email = "your_email@gmail.com"  # change this
+    sender_email = "your_gmail@gmail.com"     # change this
+    sender_password = "your_app_password_here"
+
+    send_email_alert(subject, body, recipient_email, sender_email, sender_password)
+    st.warning("📧 Email alert sent!")
+
+# ---------------------------------
+# AWS Cost Tracker (Optional)
+# ---------------------------------
+st.header("☁️ AWS Cost Tracker")
+
+if os.path.exists("aws_cost_data.csv"):
+    df_aws = pd.read_csv("aws_cost_data.csv")
+    df_aws['ds'] = pd.to_datetime(df_aws['ds'])
+    st.success("✅ AWS Cost Data Loaded")
+
+    # Plot daily AWS cost trend
+    fig1 = px.line(df_aws, x='ds', y='y', title="Daily AWS Cost (Last 30 Days)")
+    st.plotly_chart(fig1, use_container_width=True)
+
+    # AI Forecast for next 7 days
+    st.subheader("🤖 7-Day AI Forecast")
+    model = Prophet()
+    model.fit(df_aws.rename(columns={"ds": "ds", "y": "y"}))
+    future = model.make_future_dataframe(periods=7)
+    forecast = model.predict(future)
+    fig2 = px.line(forecast, x="ds", y="yhat", title="Forecasted AWS Cost (Next 7 Days)")
+    st.plotly_chart(fig2, use_container_width=True)
+
+    # Detect anomalies
+    df_aws['z_score'] = (df_aws['y'] - df_aws['y'].mean()) / df_aws['y'].std()
+    anomalies = df_aws[df_aws['z_score'].abs() > 2]
+    if not anomalies.empty:
+        st.warning("⚠️ Anomalies Detected in AWS Spend:")
+        st.dataframe(anomalies[['ds', 'y', 'z_score']])
+    else:
+        st.info("✅ No AWS cost anomalies detected.")
+else:
+    st.info("ℹ️ Skipping live AWS tracker — no AWS cost data found (mock mode active).")
