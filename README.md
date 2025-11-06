@@ -20,45 +20,45 @@ Built using Python, Streamlit, AWS SDK (boto3), and Prophet, it provides proacti
 
 ***Tech Stack***
 
-Programming Language: Python 3.10+
+**Programming Language:** Python 3.10+
 
-Framework: Streamlit
+**Framework:** Streamlit
 
-Cloud SDK: AWS boto3
+**Cloud SDK:** AWS boto3
 
-Forecasting Library: Prophet
+**Forecasting Library:** Prophet
 
-Data Handling: Pandas, Matplotlib
+**Data Handling**: Pandas, Matplotlib
 
-Automation: Cron jobs
+**Automation:** Cron jobs
 
-Email Service: SMTP (Gmail App Password)
+**Email Service:** SMTP (Gmail App Password)
 
 
-Installation
+***Installation***
 
-Step 1: Clone the repository
+***Step 1*: Clone the repository**
 
 git clone https://github.com/<your-username>/ai-cost-optimizer.git
 cd ai-cost-optimizer
 
 
-Step 2: Install dependencies
+***Step 2*: Install dependencies**
 
 pip install -r requirements.txt
 
 
-Step 3: Configure environment variables
+***Step 3*: Configure environment variables**
 Create a .env file in the project root:
 
-AWS_ACCESS_KEY_ID=your_access_key
-AWS_SECRET_ACCESS_KEY=your_secret_key
-AWS_REGION=us-east-1
-EMAIL_ADDRESS=your_email@gmail.com
-EMAIL_PASSWORD=your_app_password
+•AWS_ACCESS_KEY_ID=your_access_key
+•AWS_SECRET_ACCESS_KEY=your_secret_key
+•AWS_REGION=us-east-1
+•EMAIL_ADDRESS=your_email@gmail.com
+•EMAIL_PASSWORD=your_app_password
 
 
-Run the Dashboard
+**Run the Dashboard**
 
 To start the dashboard, run
 
@@ -70,17 +70,17 @@ http://localhost:8501
 
 
 
-Automate Daily Alerts
+**Automate Daily Alerts**
 
 Set up a cron job for automatic daily cost monitoring and alerts:
 
-crontab -e
+*crontab -e*
 
-Add this line:
+**Add this line:**
 
 0 9 * * * /usr/bin/python3 /home/vicky/ai-cost-optimizer/daily_monitor.py >> /home/vicky/ai-cost-optimizer/logs.txt 2>&1
 
-Folder Structure
+**Folder Structure**
 
 ai-cost-optimizer/
 │
@@ -100,41 +100,41 @@ ai-cost-optimizer/
 └── README.md
 
 
-Example Alert Message
+**Example Alert Message**
 
 
-Subject: Cost Spike Detected
-Body:
-Date: 2025-11-05
-Current Cost: ₹423.00
-Expected Cost: ₹220.00
-Anomaly: +92%
+•Subject: Cost Spike Detected
+•Body:
+•Date: 2025-11-05
+•Current Cost: ₹423.00
+•Expected Cost: ₹220.00
+•Anomaly: +92%
 
 
-Results and Future Improvements
+***Results and Future Improvements***
 Results
 
-Successfully visualized real AWS cost trends and predictions
+•Successfully visualized real AWS cost trends and predictions
 
-Detected anomalies automatically using AI forecasting
+•Detected anomalies automatically using AI forecasting
 
-Sent email alerts for real-time cost monitoring
+•Sent email alerts for real-time cost monitoring
 
-Provided optimization suggestions using pattern analysis
+•Provided optimization suggestions using pattern analysis
 
-Future Improvements
+•Future Improvements
 
-Integrate Slack or Teams alerts for real-time updates
+•Integrate Slack or Teams alerts for real-time updates
 
-Add multi-cloud support (AWS, Azure, GCP)
+•Add multi-cloud support (AWS, Azure, GCP)
 
-Containerize with Docker and deploy via GitHub Actions
+•Containerize with Docker and deploy via GitHub Actions
 
-Extend service-level cost breakdowns
+•Extend service-level cost breakdowns
 
-Build AI-driven budget recommendation engine
+•Build AI-driven budget recommendation engine
 
-Author
+***Author***
 
 Vignesh Vellaidurai
 AI & DevOps Enthusiast
