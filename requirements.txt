@@ -1,11 +1,8 @@
 streamlit
-boto3
 pandas
-prophet
 matplotlib
+prophet
+cmdstanpy
+boto3
 scikit-learn
 numpy
-cmdstanpy
-smtplib
-email-validator
-python-dotenv
