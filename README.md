@@ -1,9 +1,11 @@
-*___AI Cost Optimizer — Real-Time Cloud Cost Monitoring using AI & DevOps___*
+****___AI Cost Optimizer — Real-Time Cloud Cost Monitoring using AI & DevOps___****
 
 ***Overview***
 
 AI Cost Optimizer is an intelligent DevOps monitoring project that uses machine learning and AWS integration to automatically track, predict, and optimize cloud costs in real time.
 Built using Python, Streamlit, AWS SDK (boto3), and Prophet, it provides proactive alerts for cost anomalies and daily cost summaries through automated email notifications.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ***Features***
 
@@ -18,6 +20,8 @@ Built using Python, Streamlit, AWS SDK (boto3), and Prophet, it provides proacti
 •Interactive Streamlit dashboard for cost visualization
 
 •Automated daily monitoring using cron jobs
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ***TECH STACK***
 
@@ -35,9 +39,10 @@ Built using Python, Streamlit, AWS SDK (boto3), and Prophet, it provides proacti
 
 **Email Service:** SMTP (Gmail App Password)
 
-
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ***INSTALLATION***
+
 
 ***Step 1*: Clone the repository**
 
@@ -70,7 +75,7 @@ Then open the displayed URL in your browser, typically:
 
 http://localhost:8501
 
-
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 **Automate Daily Alerts**
 
@@ -82,25 +87,40 @@ Set up a cron job for automatic daily cost monitoring and alerts:
 
 0 9 * * * /usr/bin/python3 /home/vicky/ai-cost-optimizer/daily_monitor.py >> /home/vicky/ai-cost-optimizer/logs.txt 2>&1
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 **Folder Structure**
 
 ai-cost-optimizer/
+
 │
 ├── app/
+
 │   ├── dashboard.py
+
 │   ├── email_alert.py
+
 │
 ├── data/
+
 │   └── aws_billing_mock.csv
+
 │
 ├── fetch_aws_cost.py
+
 ├── daily_monitor.py
+
 ├── anomaly_detector.py
+
 ├── cost_predictor.py
+
 ├── optimizer.py
+
 ├── requirements.txt
+
 └── README.md
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 **Example Alert Message**
 
@@ -118,7 +138,11 @@ ai-cost-optimizer/
 •Anomaly: +92%
 
 
-***Results and Future Improvements***
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+***RESULTS AND FUTURE IMPROVEMENTS***
 
 
 ***Results***
@@ -134,15 +158,17 @@ ai-cost-optimizer/
 
 ***Future Improvements***
 
-•Integrate Slack or Teams alerts for real-time updates
+•Integrate Slack or Teams alerts for real-time updates.
 
-•Add multi-cloud support (AWS, Azure, GCP)
+•Add multi-cloud support (AWS, Azure, GCP).
 
-•Containerize with Docker and deploy via GitHub Actions
+•Containerize with Docker and deploy via GitHub Actions.
 
-•Extend service-level cost breakdowns
+•Extend service-level cost breakdowns.
 
-•Build AI-driven budget recommendation engine
+•Build AI-driven budget recommendation engine.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ***Author***
 
@@ -152,6 +178,6 @@ AI & DevOps Enthusiast,
 
 Building intelligent automation for cloud cost optimization and monitoring.
 
-
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
