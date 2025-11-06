@@ -16,9 +16,10 @@ Built using Python, Streamlit, AWS SDK (boto3), and Prophet, it provides proacti
 •Sends automated email alerts for high spending
 
 •Interactive Streamlit dashboard for cost visualization
+
 •Automated daily monitoring using cron jobs
 
-***Tech Stack***
+***TECH STACK***
 
 **Programming Language:** Python 3.10+
 
@@ -35,7 +36,8 @@ Built using Python, Streamlit, AWS SDK (boto3), and Prophet, it provides proacti
 **Email Service:** SMTP (Gmail App Password)
 
 
-***Installation***
+
+***INSTALLATION***
 
 ***Step 1*: Clone the repository**
 
@@ -104,15 +106,22 @@ ai-cost-optimizer/
 
 
 •Subject: Cost Spike Detected
+
 •Body:
+
 •Date: 2025-11-05
+
 •Current Cost: ₹423.00
+
 •Expected Cost: ₹220.00
+
 •Anomaly: +92%
 
 
 ***Results and Future Improvements***
-Results
+
+
+***Results***
 
 •Successfully visualized real AWS cost trends and predictions
 
@@ -122,7 +131,8 @@ Results
 
 •Provided optimization suggestions using pattern analysis
 
-•Future Improvements
+
+***Future Improvements***
 
 •Integrate Slack or Teams alerts for real-time updates
 
@@ -136,8 +146,10 @@ Results
 
 ***Author***
 
-Vignesh Vellaidurai
-AI & DevOps Enthusiast
+Vignesh Vellaidurai,
+
+AI & DevOps Enthusiast,
+
 Building intelligent automation for cloud cost optimization and monitoring.
 
 
