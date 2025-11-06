@@ -36,9 +36,9 @@ This project serves as a learning and practical demonstration of integrating AI 
 | **Version Control**     | Git & GitHub                       |
 
 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
-****AI Usage***
+***AI Usage***
 
 
 **AI is utilized in two main areas of this project:**
@@ -108,19 +108,31 @@ Set up a cron job for automatic daily cost monitoring and alerts:
 **Folder Structure**
 
 ai-cost-optimizer/
+
 │
 ├── app/
+
 │   ├── dashboard.py              # Main Streamlit application
+
 │   ├── cost_predictor.py         # AI forecasting logic
+
 │   ├── anomaly_detector.py       # Anomaly detection module
+
 │   ├── optimizer.py              # Cost optimization recommendations
+
 │   ├── email_alert.py            # Email alert function
+
 │   └── data/
+
 │       └── aws_billing_mock.csv  # Sample cost data
+
 │
 ├── requirements.txt              # Python dependencies
+
 ├── README.md                     # Project documentation
+
 └── .gitignore                    # Git ignore rules
+
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -189,8 +201,11 @@ ai-cost-optimizer/
 ***Author***
 
 **Developed by:** Vignesh V
+
 **Role:** AI + DevOps Enthusiast
+
 **Focus Areas:** Streamlit, Prophet AI, Cloud Cost Management, DevOps Automation.
+
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
